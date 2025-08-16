@@ -2,12 +2,20 @@ package com.mikadosolutions.training.spring.di;
 import java.util.*;
 
 public class MikadoSolutions implements TrainingCompany {
+    
     List<Trainer> trainers;
     static MikadoSolutions mikado;
     Set<Course> courses;
     Map<Course, Trainer> courseTrainers;
+    Map<String, Trainer> namesTrainers;
 
     private MikadoSolutions() {}
+
+    public void setNamesTrainers(Map<String,Trainer> namesTrainers)
+    {
+        this.namesTrainers = namesTrainers;
+        System.out.println("-------------inside setNamesTrainers()--------------"+namesTrainers);
+    }
 
     public static MikadoSolutions getMikadoSolutions() {
         if (mikado == null)
@@ -31,6 +39,7 @@ public class MikadoSolutions implements TrainingCompany {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+        System.out.println("--------------Inside setCourses()---------"+courses);
     }
 
     public Set<Course> getCourses() {
@@ -50,6 +59,8 @@ public class MikadoSolutions implements TrainingCompany {
 
     public void setTrainers(List<Trainer> trainers) {
         this.trainers = trainers;
+        System.out.println("--------------Inside setTrainers()---------"+trainers);
+
     }
 
     public List<Trainer> getTrainers() {

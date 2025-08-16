@@ -81,7 +81,12 @@
         </constructor-arg>
     </bean> -->
 
-    <bean id="struts2Course" class="com.mikadosolutions.training.spring.di.Struts2Course">
+    <!-- ByDefault Singleton scope -->
+    <!-- <bean id="struts2Course" class="com.mikadosolutions.training.spring.di.Struts2Course"> -->
+
+    <!-- Prototype scope -->
+    <bean id="struts2Course" class="com.mikadosolutions.training.spring.di.Struts2Course" scope="prototype">
+
         <property name="courseDuration" value="40"/>
         <property name="courseContents">
             <list>
@@ -228,8 +233,41 @@
 </bean>
 
 
+<!-- byName autowire eg | where id's name should be same as instance variable in training workshop class -->
+<!-- <bean id="trainingCompany" class="com.mikadosolutions.training.spring.di.MikadoSolutions" factory-method="getMikadoSolutions"> -->
+<!-- primary="true"means bean selected for autowire and autowire-candidate="false" means this bean is never be selected for any autowiring(like byName, byType) -->
+<bean id="mikado" class="com.mikadosolutions.training.spring.di.MikadoSolutions" factory-method="getMikadoSolutions" primary="true" autowire="byType">
+    <!-- <property name="trainers">
+        <list>
+            <ref bean="sanjay"/>
+            <ref bean="praful"/>
+            <ref bean="pankaj"/>
+            <ref bean="pankaj"/>
+            <ref bean="ajay"/>
+        </list>
+    </property>
+    <property name="courses">
+        <set>
+            <ref bean="coreJavaCourse"/>
+            <ref bean="advancedJavaCourse"/>
+            <ref bean="struts2Course"/>
+            <ref bean="hibernateCourse"/>
+            <ref bean="ejb3Course"/>
+            <ref bean="dotNetCourse"/>
+            <ref bean="androidCourse"/>
+        </set>
+    </property> -->
+    <!-- <property name="courseTrainers">
+        <map>
+            <entry key-ref="coreJavaCourse" value-ref="sanjay"/>
+            <entry key-ref="advancedJavaCourse" value-ref="sanjay"/>
+            <entry key-ref="struts2Course" value-ref="sanjay"/>
+            <entry key-ref="hibernateCourse" value-ref="praful"/>
+        </map>
+    </property> -->
+</bean>
 
-<bean id="mikado" class="com.mikadosolutions.training.spring.di.MikadoSolutions" factory-method="getMikadoSolutions">
+<bean id="mikado1" class="com.mikadosolutions.training.spring.di.MikadoSolutions" factory-method="getMikadoSolutions">
     <property name="trainers">
         <list>
             <ref bean="sanjay"/>
@@ -260,7 +298,15 @@
     </property> -->
 </bean>
 
-<bean id="trainingWorkshop" class="com.mikadosolutions.training.spring.di.TrainingWorkshop" p:trainingCompany-ref="mikado" />
+<!-- <bean id="trainingWorkshop" class="com.mikadosolutions.training.spring.di.TrainingWorkshop" autowire="byName" /> -->
+<!-- <bean id="trainingWorkshop" class="com.mikadosolutions.training.spring.di.TrainingWorkshop" autowire="byType" /> -->
+<bean id="trainingWorkshop" class="com.mikadosolutions.training.spring.di.TrainingWorkshop" autowire="constructor" />
+
+<bean id="home" class="com.mikado.Home" scope="prototype"/>	
+	<!-- <bean id="lodha" class="com.mikado.LodhaDevelopers" autowire="byName" /> -->
+	<bean id="lodha" class="com.mikado.LodhaDevelopers">
+		<lookup-method name="getHome" bean="home"/>
+</bean>
 
 </beans>
 
